@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_show_banner.php,v 1.1 2003/12/21 20:13:07 hubi74 Exp $
+   $Id: affiliate_show_banner.php,v 1.2 2003/12/29 12:11:29 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -133,7 +133,7 @@ if (!empty($prod_banner_id)) {
 if (AFFILIATE_SHOW_BANNERS_DEBUG == 'true') affiliate_debug($banner,$sql);
 
 if ($banner) {
-    $pic = DIR_FS_CATALOG . DIR_WS_IMAGES . $banner;
+    $pic = DIR_FS_CATALOG . DIR_WS_THUMBNAIL_IMAGES . $banner;
 
     // Show Banner only if it exists:
     if (is_file($pic)) {
