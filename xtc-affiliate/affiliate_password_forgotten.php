@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_password_forgotten.php,v 1.2 2004/04/05 18:59:11 hubi74 Exp $
+   $Id: affiliate_password_forgotten.php,v 1.3 2004/04/08 16:07:53 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -37,7 +37,7 @@ require(DIR_FS_CATALOG .'templates/'.CURRENT_TEMPLATE. '/source/boxes.php');
 require_once(DIR_WS_CLASSES . 'class.phpmailer.php');
 
 if (isset($_GET['action']) && ($_GET['action'] == 'process')) {
-	$check_affiliate_query = tep_db_query("select affiliate_firstname, affiliate_lastname, affiliate_password, affiliate_id from " . TABLE_AFFILIATE . " where affiliate_email_address = '" . $_POST['email_address'] . "'");
+	$check_affiliate_query = xtc_db_query("select affiliate_firstname, affiliate_lastname, affiliate_password, affiliate_id from " . TABLE_AFFILIATE . " where affiliate_email_address = '" . $_POST['email_address'] . "'");
     if (xtc_db_num_rows($check_affiliate_query)) {
     	$check_affiliate = xtc_db_fetch_array($check_affiliate_query);
     	// Crypted password mods - create a new password, update the database and mail it to them

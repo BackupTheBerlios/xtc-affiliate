@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: readme_de.txt,v 1.3 2004/04/08 14:23:16 hubi74 Exp $
+   $Id: readme_de.txt,v 1.4 2004/04/08 16:07:53 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -38,13 +38,6 @@ Anschliessend führen Sie bitte nacheinander die folgenden Schritte durch:
 	   am Ende der Datei folgende Zeilen einfügen (vor dem letzten ?>):
 	       // inclusion for affiliate program
 	       include('affiliate_application_top.php');
-	       
-  --> templates/xtc/source/boxes.php
-	  vor folgende Zeile:
-           $smarty->assign('tpl_path',DIR_WS_CATALOG.'templates/'.CURRENT_TEMPLATE.'/');
-	  folgende Zeilen einfügen:
-		   // inclusion for affiliate program
-		   include(DIR_WS_BOXES . 'affiliate.php');
 	       
   -->  checkout_process.php
 	   nach den folgenden Zeilen:
@@ -99,6 +92,14 @@ Anschliessend führen Sie bitte nacheinander die folgenden Schritte durch:
           {$box_WHATSNEW}
 	  folgende Zeile einfügen:
 		  {$box_AFFILIATE}
+
+  --> templates/xtc/source/boxes.php
+	  vor folgende Zeile:
+           $smarty->assign('tpl_path',DIR_WS_CATALOG.'templates/'.CURRENT_TEMPLATE.'/');
+	  folgende Zeilen einfügen:
+		   // inclusion for affiliate program
+		   include(DIR_WS_BOXES . 'affiliate.php');
+	       
 		  
 4) Als Administrator einloggen und im Adminbereich das Affiliate Partnerprogramm
    konfiguraieren. Im Content Manager von XTC lassen sich die Texte der AGB, der

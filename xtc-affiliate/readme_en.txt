@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: readme_en.txt,v 1.3 2004/04/08 14:23:16 hubi74 Exp $
+   $Id: readme_en.txt,v 1.4 2004/04/08 16:07:53 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -38,13 +38,6 @@ Hereafter just perform the following steps in their given order:
 	   add these lines at the end of the file (before the last ?>):
 	       // inclusion for affiliate program
 	       include('affiliate_application_top.php');
-	       
-  --> templates/xtc/source/boxes.php
-	  before the following line:
-           $smarty->assign('tpl_path',DIR_WS_CATALOG.'templates/'.CURRENT_TEMPLATE.'/');
-	  add these lines:
-		   // inclusion for affiliate program
-		   include(DIR_WS_BOXES . 'affiliate.php');
 	       
   -->  checkout_process.php
 	   before the following lines:
@@ -99,6 +92,14 @@ Hereafter just perform the following steps in their given order:
           {$box_WHATSNEW}
 	  add these line:
 		  {$box_AFFILIATE}
+
+  --> templates/xtc/source/boxes.php
+	  before the following line:
+           $smarty->assign('tpl_path',DIR_WS_CATALOG.'templates/'.CURRENT_TEMPLATE.'/');
+	  add these lines:
+		   // inclusion for affiliate program
+		   include(DIR_WS_BOXES . 'affiliate.php');
+
 		  
 4) Login as the admin and go to the admin section, where you can configure your
    affiliate program. In the content manager of XTC you can insert your terms
