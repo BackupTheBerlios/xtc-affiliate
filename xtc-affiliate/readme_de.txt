@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: readme_de.txt,v 1.2 2004/04/05 18:59:11 hubi74 Exp $
+   $Id: readme_de.txt,v 1.3 2004/04/08 14:23:16 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -39,7 +39,7 @@ Anschliessend führen Sie bitte nacheinander die folgenden Schritte durch:
 	       // inclusion for affiliate program
 	       include('affiliate_application_top.php');
 	       
-  --> templates/xtc/source/includes/boxes.php
+  --> templates/xtc/source/boxes.php
 	  vor folgende Zeile:
            $smarty->assign('tpl_path',DIR_WS_CATALOG.'templates/'.CURRENT_TEMPLATE.'/');
 	  folgende Zeilen einfügen:
