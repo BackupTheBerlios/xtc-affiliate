@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_sales.php,v 1.1 2003/12/21 20:13:07 hubi74 Exp $
+   $Id: affiliate_sales.php,v 1.2 2004/04/05 18:59:11 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -34,7 +34,7 @@ require_once(DIR_FS_INC . 'affiliate_get_level_list.inc.php');
 require_once(DIR_FS_INC . 'xtc_date_short.inc.php');
 
 // include boxes
-require(DIR_WS_INCLUDES.'boxes.php');
+require(DIR_FS_CATALOG .'templates/'.CURRENT_TEMPLATE. '/source/boxes.php');
 
 if (!isset($_SESSION['affiliate_id'])) {
     xtc_redirect(xtc_href_link(FILENAME_AFFILIATE, '', 'SSL'));
@@ -72,9 +72,7 @@ $affiliate_sales_raw = "select a.affiliate_payment, a.affiliate_date, a.affiliat
         o.orders_status, os.orders_status_name
     order by affiliate_date DESC";
 
-$count_key = 'aa.affiliate_date_account_created, o.orders_status, os.orders_status_name,
-        a.affiliate_payment, a.affiliate_date, a.affiliate_value, a.affiliate_percent,
-        o.orders_status, os.orders_status_name';
+$count_key = 'aa.affiliate_date_account_created, o.orders_status, os.orders_status_name, a.affiliate_payment, a.affiliate_date, a.affiliate_value, a.affiliate_percent, o.orders_status, os.orders_status_name';
         
 $affiliate_sales_split = new splitPageResults($affiliate_sales_raw, $_GET['page'], MAX_DISPLAY_SEARCH_RESULTS, $count_key);
 if ($affiliate_sales_split->number_of_rows > 0) {

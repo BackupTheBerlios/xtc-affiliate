@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_contact.php,v 1.1 2003/12/21 20:13:07 hubi74 Exp $
+   $Id: affiliate_contact.php,v 1.2 2004/04/05 18:59:11 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -33,7 +33,7 @@ require_once(DIR_FS_INC . 'xtc_validate_email.inc.php');
 require_once(DIR_FS_INC . 'xtc_image_button.inc.php');
 
 // include boxes
-require(DIR_WS_INCLUDES.'boxes.php');
+require(DIR_FS_CATALOG .'templates/'.CURRENT_TEMPLATE. '/source/boxes.php');
 
 // include the mailer-class
 require_once(DIR_WS_CLASSES . 'class.phpmailer.php');

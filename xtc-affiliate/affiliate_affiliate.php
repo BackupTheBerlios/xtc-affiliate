@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_affiliate.php,v 1.1 2003/12/21 20:13:07 hubi74 Exp $
+   $Id: affiliate_affiliate.php,v 1.2 2004/04/05 18:59:11 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -27,7 +27,7 @@ require('includes/application_top.php');
 $smarty = new Smarty;
 
 // include boxes
-require(DIR_WS_INCLUDES.'boxes.php');
+require(DIR_FS_CATALOG .'templates/'.CURRENT_TEMPLATE. '/source/boxes.php');
 
 // include needed functions
 require_once(DIR_FS_INC . 'xtc_draw_password_field.inc.php');
