@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_summary.php,v 1.1 2003/12/21 20:13:07 hubi74 Exp $
+   $Id: affiliate_summary.php,v 1.2 2003/12/29 12:10:56 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -23,9 +23,12 @@
 
   require('includes/application_top.php');
 
+  // include used functions
+  require_once(DIR_FS_INC . 'xtc_add_tax.inc.php');
+
   require(DIR_WS_CLASSES . 'currencies.php');
   $currencies = new currencies();
-
+  
   // delete clickthroughs
   if (AFFILIATE_DELETE_CLICKTHROUGHS != 'false' && is_numeric(AFFILIATE_DELETE_CLICKTHROUGHS)) {
     $time = mktime (1,1,1,date("m"),date("d") - AFFILIATE_DELETE_CLICKTHROUGHS, date("Y"));
