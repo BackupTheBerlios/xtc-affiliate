@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_payment.php,v 1.2 2004/04/05 18:59:11 hubi74 Exp $
+   $Id: affiliate_payment.php,v 1.3 2004/11/16 13:34:56 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -22,6 +22,9 @@
    ---------------------------------------------------------------------------*/
 
 require('includes/application_top.php');
+
+// include needed functions
+require_once(DIR_FS_INC . 'xtc_date_short.inc.php');
 
 // create smarty elements
 $smarty = new Smarty;
@@ -68,7 +71,7 @@ if ($affiliate_payment_split->number_of_rows > 0) {
 		
 		$affiliate_payment_table .= '<td class="smallText" align="right">' . $affiliate_payment['affiliate_payment_id'] . '</td>';
 		$affiliate_payment_table .= '<td class="smallText" align="center">' . xtc_date_short($affiliate_payment['affiliate_payment_date']) . '</td>';
-		$affiliate_payment_table .= '<td class="smallText" align="right">' . $currencies->display_price($affiliate_payment['affiliate_payment_total'], '') . '</td>';
+		$affiliate_payment_table .= '<td class="smallText" align="right">' . $xtPrice->xtcFormat($affiliate_payment['affiliate_payment_total'], true) . '</td>';
 		$affiliate_payment_table .= '<td class="smallText" align="right">' . $affiliate_payment['affiliate_payment_status_name'] . '</td>';
 	}
 	$smarty->assign('affiliate_payment_table', $affiliate_payment_table);
@@ -82,7 +85,7 @@ if ($affiliate_payment_split->number_of_rows > 0) {
 $affiliate_payment_values = xtc_db_query("select sum(affiliate_payment_total) as total from " . TABLE_AFFILIATE_PAYMENT . " where affiliate_id = '" . $_SESSION['affiliate_id'] . "'");
 $affiliate_payment = xtc_db_fetch_array($affiliate_payment_values);
 
-$smarty->assign('affiliate_payment_total', $currencies->display_price($affiliate_payment['total'], ''));
+$smarty->assign('affiliate_payment_total', $xtPrice->xtcFormat($affiliate_payment['total'], true));
 $smarty->assign('language', $_SESSION['language']);
 $smarty->caching = 0;
 $main_content=$smarty->fetch(CURRENT_TEMPLATE . '/module/affiliate_payment.html');

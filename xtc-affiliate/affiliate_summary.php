@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_summary.php,v 1.2 2004/04/05 18:59:11 hubi74 Exp $
+   $Id: affiliate_summary.php,v 1.3 2004/11/16 13:34:56 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -30,6 +30,7 @@ $smarty = new Smarty;
 require_once(DIR_FS_INC . 'affiliate_period.inc.php');
 require_once(DIR_FS_INC . 'affiliate_level_statistics_query.inc.php');
 require_once(DIR_FS_INC . 'xtc_image_button.inc.php');
+require_once(DIR_FS_INC . 'xtc_round.inc.php');
 
 // include boxes
 require(DIR_FS_CATALOG .'templates/'.CURRENT_TEMPLATE. '/source/boxes.php');
@@ -85,18 +86,18 @@ else {
 }
 $smarty->assign('affiliate_conversions', $affiliate_conversions);
 
-$smarty->assign('affiliate_amount', $currencies->display_price($affiliate_sales['total'], ''));
+$smarty->assign('affiliate_amount', $xtPrice->xtcFormat($affiliate_sales['total'], true));
 
 if ($affiliate_transactions > 0) {
 	$affiliate_average = xtc_round($affiliate_amount / $affiliate_transactions, 2);
-	$affiliate_average = $currencies->display_price($affiliate_average, '');
+	$affiliate_average = $xtPrice->xtcFormat($affiliate_average, true);
 }
 else {
 	$affiliate_average = "n/a";
 }
 $smarty->assign('affiliate_average', $affiliate_average);
 
-$smarty->assign('affiliate_commission', $currencies->display_price($affiliate_sales['payment'], ''));;
+$smarty->assign('affiliate_commission', $xtPrice->xtcFormat($affiliate_sales['payment'], true));;
 
 require(DIR_WS_INCLUDES . 'header.php');
 
@@ -125,9 +126,9 @@ if ( AFFILATE_USE_TIER == 'true' ) {
     	$affiliate_percent_tier_table .= '<td width="15%" align="right" class="boxtext"><a href=' . xtc_href_link(FILENAME_AFFILIATE_SALES, 'a_level=' . $tier_number . '&a_period=' . $a_period, 'SSL') . '>' . TEXT_COMMISSION_TIER_COUNT . '</a></td>';
     	$affiliate_percent_tier_table .= '<td width="5%" class="boxtext">' . ($affiliate_sales[$tier_number]['count'] > 0 ? $affiliate_sales[$tier_number]['count'] : '0') . '</td>';
     	$affiliate_percent_tier_table .= '<td width="15%" align="right" class="boxtext"><a href=' . xtc_href_link(FILENAME_AFFILIATE_SALES, 'a_level=' . $tier_number . '&a_period=' . $a_period, 'SSL') . '>' . TEXT_COMMISSION_TIER_TOTAL . '</a></td>';
-    	$affiliate_percent_tier_table .= '<td width="5%" class="boxtext">' . $currencies->display_price($affiliate_sales[$tier_number]['total'],'') . '</td>';
+    	$affiliate_percent_tier_table .= '<td width="5%" class="boxtext">' . $xtPrice->xtcFormat($affiliate_sales[$tier_number]['total'], true) . '</td>';
     	$affiliate_percent_tier_table .= '<td width="20%" align="right" class="boxtext"><a href=' . xtc_href_link(FILENAME_AFFILIATE_SALES, 'a_level=' . $tier_number . '&a_period=' . $a_period, 'SSL') . '>' . TEXT_COMMISSION_TIER . '</a></td>';
-    	$affiliate_percent_tier_table .= '<td width="5%" class="boxtext">' . $currencies->display_price($affiliate_sales[$tier_number]['payment'],'') . '</td>';
+    	$affiliate_percent_tier_table .= '<td width="5%" class="boxtext">' . $xtPrice->xtcFormat($affiliate_sales[$tier_number]['payment'],true) . '</td>';
     	$affiliate_percent_tier_table .= '</tr>';
 	}
 	$smarty->assign('affiliate_percent_tier_table', $affiliate_percent_tier_table);

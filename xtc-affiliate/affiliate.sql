@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------
-#  $Id: affiliate.sql,v 1.1 2003/12/21 20:13:07 hubi74 Exp $
+#  $Id: affiliate.sql,v 1.2 2004/11/16 13:34:36 hubi74 Exp $
 #
 #  XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
 #  modified by http://www.netz-designer.de
@@ -229,10 +229,10 @@ INSERT INTO cm_file_flags VALUES (900, 'affiliate');
 
 # Insert some needed Content to the content manager
 # german Stuff
-INSERT INTO content_manager VALUES ('', 0, 0, 2, 'Partner AGB', 'Unsere Affiliate AGB', 'Tragen Sie <STRONG>hier</STRONG> Ihre <EM><U>allgemeinen Geschäftsbedingungen</U></EM> für Ihr Partnerprogramm ein.', 900, '', 1, 900, 0);
-INSERT INTO content_manager VALUES ('', 0, 0, 2, 'Affiliate Info', 'Affiliate Informationen', 'Tragen Sie <STRONG>hier</STRONG> Ihre <EM><U>Informationen zum Affiliate Programm</U></EM> ein.', 900, '', 1, 901, 0);
-INSERT INTO content_manager VALUES ('', 0, 0, 2, 'Affiliate FAQ', 'Häufig gestellte Fragen', 'Tragen Sie <STRONG>hier</STRONG> Ihre <EM><U>FAQ zum Affiliate Programm</U></EM> ein.', 900, '', 1, 902, 0);
+INSERT INTO content_manager VALUES ('', 0, 0, '', 2, 'Partner AGB', 'Unsere Affiliate AGB', 'Tragen Sie <STRONG>hier</STRONG> Ihre <EM><U>allgemeinen Geschäftsbedingungen</U></EM> für Ihr Partnerprogramm ein.', 0, 900, '', 1, 900, 0);
+INSERT INTO content_manager VALUES ('', 0, 0, '', 2, 'Affiliate Info', 'Affiliate Informationen', 'Tragen Sie <STRONG>hier</STRONG> Ihre <EM><U>Informationen zum Affiliate Programm</U></EM> ein.', 0, 900, '', 1, 901, 0);
+INSERT INTO content_manager VALUES ('', 0, 0, '', 2, 'Affiliate FAQ', 'Häufig gestellte Fragen', 'Tragen Sie <STRONG>hier</STRONG> Ihre <EM><U>FAQ zum Affiliate Programm</U></EM> ein.', 0, 900, '', 1, 902, 0);
 # english stuff
-INSERT INTO content_manager VALUES ('', 0, 0, 1, 'Partner T&C', 'Our Affiliate Terms and Conditions', 'Put in <STRONG>here</STRONG> your <EM><U>terms and conditions</U></EM> for your affiliate program.', 900, '', 1, 900, 0);
-INSERT INTO content_manager VALUES ('', 0, 0, 1, 'Affiliate Info', 'Affiliate Information', 'Put in <STRONG>here</STRONG> your <EM><U>information about your affiliate program</U></EM>.', 900, '', 1, 901, 0);
-INSERT INTO content_manager VALUES ('', 0, 0, 1, 'Affiliate FAQ', 'Frequently Asked Questions', 'Put in <STRONG>here</STRONG> some <EM><U>FAQ for your affiliate program</U></EM>.', 900, '', 1, 902, 0);
+INSERT INTO content_manager VALUES ('', 0, 0, '', 1, 'Partner T&C', 'Our Affiliate Terms and Conditions', 'Put in <STRONG>here</STRONG> your <EM><U>terms and conditions</U></EM> for your affiliate program.', 0, 900, '', 1, 900, 0);
+INSERT INTO content_manager VALUES ('', 0, 0, '', 1, 'Affiliate Info', 'Affiliate Information', 'Put in <STRONG>here</STRONG> your <EM><U>information about your affiliate program</U></EM>.', 0, 900, '', 1, 901, 0);
+INSERT INTO content_manager VALUES ('', 0, 0, '', 1, 'Affiliate FAQ', 'Frequently Asked Questions', 'Put in <STRONG>here</STRONG> some <EM><U>FAQ for your affiliate program</U></EM>.', 0, 900, '', 1, 902, 0);

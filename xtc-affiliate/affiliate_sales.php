@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_sales.php,v 1.2 2004/04/05 18:59:11 hubi74 Exp $
+   $Id: affiliate_sales.php,v 1.3 2004/11/16 13:34:56 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -111,10 +111,10 @@ if ($affiliate_sales_split->number_of_rows > 0) {
 			$affiliate_sales_table .= '<tr class="productListing-odd">';
 		}
 		$affiliate_sales_table .= '<td class="smallText" align="center">' . xtc_date_short($affiliate_sales['affiliate_date']) . '</td>';
-		$affiliate_sales_table .= '<td class="smallText" align="right">' . $currencies->display_price($affiliate_sales['affiliate_value'], '') . '</td>';
+		$affiliate_sales_table .= '<td class="smallText" align="right">' . $xtPrice->xtcFormat($affiliate_sales['affiliate_value'], true) . '</td>';
 		$affiliate_sales_table .= '<td class="smallText" align="right">' . $affiliate_sales['affiliate_percent'] . " %" . '</td>';
 		$affiliate_sales_table .= '<td class="smallText" align="right">' . (($affiliate_sales['level'] > 0) ? $affiliate_sales['level'] : TEXT_AFFILIATE_PERSONAL_LEVEL_SHORT) . '</td>';
-		$affiliate_sales_table .= '<td class="smallText" align="right">' . $currencies->display_price($affiliate_sales['affiliate_payment'], '') . '</td>';
+		$affiliate_sales_table .= '<td class="smallText" align="right">' . $xtPrice->xtcFormat($affiliate_sales['affiliate_payment'], true) . '</td>';
 		$affiliate_sales_table .= '<td class="smallText" align="right">' . (($affiliate_sales['orders_status'] != '')?$affiliate_sales['orders_status']:TEXT_DELETED_ORDER_BY_ADMIN) . '</td>';
 		$affiliate_sales_table .= '</tr>';
 	} while ( $affiliate_sales = xtc_db_fetch_array($affiliate_sales_values) );
@@ -126,7 +126,7 @@ if ($affiliate_sales_split->number_of_rows > 0) {
 	$smarty->assign('affiliate_sales_links', $affiliate_sales_split->display_links(MAX_DISPLAY_PAGE_LINKS, xtc_get_all_get_params(array('page', 'info', 'x', 'y'))));
 }
 
-$smarty->assign('affiliate_sales_total', $currencies->display_price($sum_of_earnings,''));
+$smarty->assign('affiliate_sales_total', $xtPrice->xtcFormat($sum_of_earnings,true));
 $smarty->assign('language', $_SESSION['language']);
 $smarty->caching = 0;
 $main_content=$smarty->fetch(CURRENT_TEMPLATE . '/module/affiliate_sales.html');

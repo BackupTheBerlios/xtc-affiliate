@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_password_forgotten.php,v 1.3 2004/04/08 16:07:53 hubi74 Exp $
+   $Id: affiliate_password_forgotten.php,v 1.4 2004/11/16 13:34:56 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -29,6 +29,8 @@ $smarty = new Smarty;
 // include needed functions
 require_once(DIR_FS_INC . 'xtc_image_button.inc.php');
 require_once(DIR_FS_INC . 'xtc_draw_input_field.inc.php');
+require_once(DIR_FS_INC . 'xtc_encrypt_password.inc.php');
+require_once(DIR_FS_INC . 'xtc_php_mail.inc.php');
 
 // include boxes
 require(DIR_FS_CATALOG .'templates/'.CURRENT_TEMPLATE. '/source/boxes.php');
