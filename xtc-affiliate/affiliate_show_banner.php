@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_show_banner.php,v 1.2 2003/12/29 12:11:29 hubi74 Exp $
+   $Id: affiliate_show_banner.php,v 1.3 2004/01/09 14:05:44 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -111,6 +111,7 @@ if (isset($_POST['affiliate_pbanner_id'])) $prod_banner_id = $_POST['affiliate_p
 
 
 if (!empty($banner_id)) {
+	$is_banner = 'true';
     $sql = "select affiliate_banners_image, affiliate_products_id from " . TABLE_AFFILIATE_BANNERS . " where affiliate_banners_id = " . $banner_id  . " and affiliate_status = 1";
     $banner_values = xtc_db_query($sql);
     if ($banner_array = xtc_db_fetch_array($banner_values)) {
@@ -120,6 +121,7 @@ if (!empty($banner_id)) {
 }
 
 if (!empty($prod_banner_id)) {
+	$is_banner = 'false';
     $banner_id = 1; // Banner ID for these Banners is one
     $sql = "select products_image from " . TABLE_PRODUCTS . " where products_id = '" . $prod_banner_id  . "' and products_status = 1";
     $banner_values = xtc_db_query($sql);
@@ -133,7 +135,12 @@ if (!empty($prod_banner_id)) {
 if (AFFILIATE_SHOW_BANNERS_DEBUG == 'true') affiliate_debug($banner,$sql);
 
 if ($banner) {
-    $pic = DIR_FS_CATALOG . DIR_WS_THUMBNAIL_IMAGES . $banner;
+	if($is_banner == 'true') {
+		$pic = DIR_FS_CATALOG . DIR_WS_IMAGES . $banner;
+	}
+	else {
+		$pic = DIR_FS_CATALOG . DIR_WS_THUMBNAIL_IMAGES . $banner;
+	}
 
     // Show Banner only if it exists:
     if (is_file($pic)) {
