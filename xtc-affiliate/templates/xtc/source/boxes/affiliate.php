@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate.php,v 1.1 2003/12/21 20:13:07 hubi74 Exp $
+   $Id: affiliate.php,v 1.1 2004/04/08 14:19:12 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
