@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_sales.php,v 1.1 2003/12/21 20:13:07 hubi74 Exp $
+   $Id: affiliate_sales.php,v 1.2 2004/11/16 13:43:11 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -135,7 +135,7 @@
           </tr>
 <?php
   }
-  if ($affiliate_sales_numrows > 0 && (PREV_NEXT_BAR_LOCATION == '2' || PREV_NEXT_BAR_LOCATION == '3')) {
+  if ($affiliate_sales_numrows > 0) {
 ?>
           <tr>
             <td colspan="7"><table border="0" width="100%" cellspacing="0" cellpadding="2">
