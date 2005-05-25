@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_contact.php,v 1.1 2003/12/21 20:13:07 hubi74 Exp $
+   $Id: affiliate_contact.php,v 1.2 2005/05/25 18:20:23 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -22,6 +22,9 @@
    ---------------------------------------------------------------------------*/
 
   require('includes/application_top.php');
+  
+  require_once(DIR_FS_CATALOG.DIR_WS_CLASSES.'class.phpmailer.php');
+  require_once(DIR_FS_INC . 'xtc_php_mail.inc.php');
 
   if ( ($_GET['action'] == 'send_email_to_user') && ($_POST['affiliate_email_address']) && (!$_POST['back_x']) ) {
     switch ($_POST['affiliate_email_address']) {
@@ -45,21 +48,19 @@
     $subject = xtc_db_prepare_input($_POST['subject']);
     $message = xtc_db_prepare_input($_POST['message']);
 
-    // Instantiate a new mail object
-    $mimemessage = new email(array('X-Mailer: XTC mailer'));
-
-    // Build the text version
-    $text = strip_tags($text);
-    if (EMAIL_USE_HTML == 'true') {
-      $mimemessage->add_html($message);
-    } else {
-      $mimemessage->add_text($message);
-    }
-
-    // Send message
-    $mimemessage->build_message();
     while ($mail = xtc_db_fetch_array($mail_query)) {
-      $mimemessage->send($mail['affiliate_firstname'] . ' ' . $mail['affiliate_lastname'], $mail['affiliate_email_address'], '', $from, $subject);
+      xtc_php_mail(EMAIL_SUPPORT_ADDRESS,
+               	   EMAIL_SUPPORT_NAME,
+               	   $mail['affiliate_email_address'] ,
+               	   $mail['affiliate_firstname'] . ' ' . $mail['affiliate_lastname'] ,
+               	   '',
+               	   EMAIL_SUPPORT_REPLY_ADDRESS,
+               	   EMAIL_SUPPORT_REPLY_ADDRESS_NAME,
+               	   '',
+               	   '',
+               	   $subject,
+               	   $message,
+               	   $message);
     }
 
     xtc_redirect(xtc_href_link(FILENAME_AFFILIATE_CONTACT, 'mail_sent_to=' . urlencode($mail_sent_to)));

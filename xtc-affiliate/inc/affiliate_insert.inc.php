@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_insert.inc.php,v 1.1 2003/12/21 20:13:07 hubi74 Exp $
+   $Id: affiliate_insert.inc.php,v 1.2 2005/05/25 18:20:23 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -23,7 +23,7 @@
 
 function affiliate_insert ($sql_data_array, $affiliate_parent = 0) {
     // LOCK TABLES
-    xtc_db_query("LOCK TABLES " . TABLE_AFFILIATE . " WRITE");
+    @mysql_query("LOCK TABLES " . TABLE_AFFILIATE . " WRITE");
     if ($affiliate_parent > 0) {
     	$affiliate_root_query = xtc_db_query("select affiliate_root, affiliate_rgt, affiliate_lft from  " . TABLE_AFFILIATE . " where affiliate_id = '" . $affiliate_parent . "' ");
     	// Check if we have a parent affiliate
@@ -46,7 +46,7 @@ function affiliate_insert ($sql_data_array, $affiliate_parent = 0) {
 		xtc_db_query ("update " . TABLE_AFFILIATE . " set affiliate_root = '" . $affiliate_id . "' where affiliate_id = '" . $affiliate_id . "' ");
     }
     // UNLOCK TABLES
-    xtc_db_query("UNLOCK TABLES");
+    @mysql_query("UNLOCK TABLES");
     return $affiliate_id;
 }
 ?>

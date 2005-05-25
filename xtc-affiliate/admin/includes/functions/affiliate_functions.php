@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_functions.php,v 1.1 2003/12/21 20:13:07 hubi74 Exp $
+   $Id: affiliate_functions.php,v 1.2 2005/05/25 18:20:23 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -37,7 +37,7 @@ function affiliate_delete ($affiliate_id) {
                     HAVING level = 2
 	                  ORDER BY aa1.affiliate_id
                    ");
-      xtc_db_query("LOCK TABLES " . TABLE_AFFILIATE . " WRITE");
+      @mysql_query("LOCK TABLES " . TABLE_AFFILIATE . " WRITE");
       while ($affiliate_child = xtc_db_fetch_array($affiliate_child_query)) {
         xtc_db_query ("UPDATE  " . TABLE_AFFILIATE . " SET affiliate_root = " . $affiliate_child['affiliate_id'] . " WHERE affiliate_root =  " . $affiliate['affiliate_root'] . "  AND affiliate_lft >= " . $affiliate_child['affiliate_lft']  . " AND affiliate_rgt <= " . $affiliate_child['affiliate_rgt']  . " ");
         $substract =  $affiliate_child['affiliate_lft'] -1;
@@ -45,9 +45,9 @@ function affiliate_delete ($affiliate_id) {
         xtc_db_query ("UPDATE  " . TABLE_AFFILIATE . " SET affiliate_rgt = affiliate_rgt - " . $substract . " WHERE  affiliate_root = " . $affiliate_child['affiliate_id']) ;
       }
       xtc_db_query("DELETE FROM " . TABLE_AFFILIATE . "  WHERE affiliate_id = " . $affiliate_id);
-      xtc_db_query("UNLOCK TABLES");
+      @mysql_query("UNLOCK TABLES");
     } else {
-      xtc_db_query("LOCK TABLES " . TABLE_AFFILIATE . " WRITE");
+      @mysql_query("LOCK TABLES " . TABLE_AFFILIATE . " WRITE");
       xtc_db_query("DELETE FROM " . TABLE_AFFILIATE . "  WHERE affiliate_id = " . $affiliate_id . " AND affiliate_root = " . $affiliate['affiliate_root'] . " ");
     
       xtc_db_query("UPDATE " . TABLE_AFFILIATE . "
@@ -65,7 +65,7 @@ function affiliate_delete ($affiliate_id) {
                   WHERE affiliate_rgt > " . $affiliate['affiliate_rgt'] . "
                   AND affiliate_root =  " . $affiliate['affiliate_root'] . " 
                  ");
-      xtc_db_query("UNLOCK TABLES");
+      @mysql_query("UNLOCK TABLES");
     }
   }
 }

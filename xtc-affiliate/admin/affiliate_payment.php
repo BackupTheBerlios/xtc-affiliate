@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_payment.php,v 1.1 2003/12/21 20:13:07 hubi74 Exp $
+   $Id: affiliate_payment.php,v 1.2 2005/05/25 18:20:23 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -25,6 +25,9 @@
 
   require(DIR_WS_CLASSES . 'currencies.php');
   $currencies = new currencies();
+  
+  require_once(DIR_FS_CATALOG.DIR_WS_CLASSES.'class.phpmailer.php');
+  require_once(DIR_FS_INC . 'xtc_php_mail.inc.php');
 
   $payments_statuses = array();
   $payments_status_array = array();
@@ -100,11 +103,11 @@
 // Get need tax informations for the affiliate
         $affiliate_tax_rate = xtc_get_affiliate_tax_rate(AFFILIATE_TAX_ID, $affiliate['affiliate_country_id'], $affiliate['affiliate_zone_id']);
         $affiliate_tax = xtc_round(($affiliate_billing['affiliate_payment'] * $affiliate_tax_rate / 100), 2); // Netto-Provision
-        $affiliate_payment_total = $affiliate_billing['affiliate_payment'] + $affiliate_tax;
+        $affiliate_payment_total = $affiliate_billing['affiliate_payment'];
 // Bill the order
         $affiliate['affiliate_state'] = xtc_get_zone_code($affiliate['affiliate_country_id'], $affiliate['affiliate_zone_id'], $affiliate['affiliate_state']);
         $sql_data_array = array('affiliate_id' => $affiliate_payment['affiliate_id'],
-                                'affiliate_payment' => $affiliate_billing['affiliate_payment'],
+                                'affiliate_payment' => $affiliate_billing['affiliate_payment']-$affiliate_tax,
                                 'affiliate_payment_tax' => $affiliate_tax,
                                 'affiliate_payment_total' => $affiliate_payment_total,
                                 'affiliate_payment_date' => 'now()',
@@ -128,8 +131,21 @@
         if (AFFILIATE_NOTIFY_AFTER_BILLING == 'true') {
           $check_status_query = xtc_db_query("select af.affiliate_email_address, ap.affiliate_lastname, ap.affiliate_firstname, ap.affiliate_payment_status, ap.affiliate_payment_date, ap.affiliate_payment_date from " . TABLE_AFFILIATE_PAYMENT . " ap, " . TABLE_AFFILIATE . " af where affiliate_payment_id  = '" . $insert_id . "' and af.affiliate_id = ap.affiliate_id ");
           $check_status = xtc_db_fetch_array($check_status_query);
+          
           $email = STORE_NAME . "\n" . EMAIL_SEPARATOR . "\n" . EMAIL_TEXT_AFFILIATE_PAYMENT_NUMBER . ' ' . $insert_id . "\n" . EMAIL_TEXT_INVOICE_URL . ' ' . xtc_catalog_href_link(FILENAME_CATALOG_AFFILIATE_PAYMENT_INFO, 'payment_id=' . $insert_id, 'SSL') . "\n" . EMAIL_TEXT_PAYMENT_BILLED . ' ' . xtc_date_long($check_status['affiliate_payment_date']) . "\n\n" . EMAIL_TEXT_NEW_PAYMENT;
-          xtc_mail($check_status['affiliate_firstname'] . ' ' . $check_status['affiliate_lastname'], $check_status['affiliate_email_address'], EMAIL_TEXT_SUBJECT, nl2br($email), STORE_OWNER, AFFILIATE_EMAIL_ADDRESS);
+          
+	      xtc_php_mail(AFFILIATE_EMAIL_ADDRESS,
+    	           	   EMAIL_SUPPORT_NAME,
+        	       	   $check_status['affiliate_email_address'] ,
+            	   	   $check_status['affiliate_firstname'] . ' ' . $check_status['affiliate_lastname'] ,
+               		   '',
+	               	   EMAIL_SUPPORT_REPLY_ADDRESS,
+    	           	   EMAIL_SUPPORT_REPLY_ADDRESS_NAME,
+        	       	   '',
+            	   	   '',
+               		   EMAIL_TEXT_SUBJECT,
+	               	   nl2br($email),
+    	           	   $email);
         }
       }
       $messageStack->add_session(SUCCESS_BILLING, 'success');
@@ -149,7 +165,18 @@
 // Notify Affiliate
         if ($_POST['notify'] == 'on') {
           $email = STORE_NAME . "\n" . EMAIL_SEPARATOR . "\n" . EMAIL_TEXT_AFFILIATE_PAYMENT_NUMBER . ' ' . $pID . "\n" . EMAIL_TEXT_INVOICE_URL . ' ' . xtc_catalog_href_link(FILENAME_CATALOG_AFFILIATE_PAYMENT_INFO, 'payment_id=' . $pID, 'SSL') . "\n" . EMAIL_TEXT_PAYMENT_BILLED . ' ' . xtc_date_long($check_status['affiliate_payment_date']) . "\n\n" . sprintf(EMAIL_TEXT_STATUS_UPDATE, $payments_status_array[$status]);
-          xtc_mail($check_status['affiliate_firstname'] . ' ' . $check_status['affiliate_lastname'], $check_status['affiliate_email_address'], EMAIL_TEXT_SUBJECT, nl2br($email), STORE_OWNER, AFFILIATE_EMAIL_ADDRESS);
+          xtc_php_mail(AFFILIATE_EMAIL_ADDRESS,
+    	           	   EMAIL_SUPPORT_NAME,
+        	       	   $check_status['affiliate_email_address'] ,
+            	   	   $check_status['affiliate_firstname'] . ' ' . $check_status['affiliate_lastname'] ,
+               		   '',
+	               	   EMAIL_SUPPORT_REPLY_ADDRESS,
+    	           	   EMAIL_SUPPORT_REPLY_ADDRESS_NAME,
+        	       	   '',
+            	   	   '',
+               		   EMAIL_TEXT_SUBJECT,
+	               	   nl2br($email),
+    	           	   $email);
           $affiliate_notified = '1';
         }
 

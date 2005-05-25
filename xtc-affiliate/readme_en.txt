@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: readme_en.txt,v 1.5 2004/11/16 13:34:56 hubi74 Exp $
+   $Id: readme_en.txt,v 1.6 2005/05/25 18:20:23 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -37,7 +37,7 @@ Hereafter just perform the following steps in their given order:
    --> includes/application_top.php
 	   add these lines at the end of the file (before the last ?>):
 	       // inclusion for affiliate program
-	       include('affiliate_application_top.php');
+	       require(DIR_WS_INCLUDES . 'affiliate_application_top.php');
 	       
   -->  checkout_process.php
 	   before the following lines:
@@ -50,42 +50,42 @@ Hereafter just perform the following steps in their given order:
   --> admin/includes/application_top.php
 	  add these lines at the end of the file (before the last ?>):
 		   // inclusion for affiliate program
-		   include('affiliate_application_top.php');
+		   require(DIR_WS_INCLUDES . 'affiliate_application_top.php');
 		   
   --> admin/includes/column_left.php
 	  add these lines at the end of the file (before the last ?>):
 		   // inclusion for affiliate program
-		   include('affiliate_column_left.php');
+		   require(DIR_WS_INCLUDES . 'affiliate_column_left.php');
 		   
   --> lang/german/german.php
       add these lines at the end of the file (before the last ?>):
 		  // inclusion for affiliate program
-		  include('affiliate_german.php');
+		  require(DIR_WS_LANGUAGES . $_SESSION['language'].'/'.'affiliate_german.php');
 		  
   --> lang/german/admin/german.php
       add these lines at the end of the file (before the last ?>):
 		  // inclusion for affiliate program
-		  include('affiliate_german.php');
+		  require(DIR_FS_LANGUAGES . $_SESSION['language'].'/admin/'.'affiliate_german.php');
 		  
   --> lang/german/admin/configuration.php
 	  add these lines at the end of the file (before the last ?>):
 		  // inclusion for affiliate program
-		  include('affiliate_configuration.php');
+		  require(DIR_FS_LANGUAGES . $_SESSION['language'].'/admin/'.'affiliate_configuration.php');
 
   --> lang/english/english.php
       add these lines at the end of the file (before the last ?>):
 		  // inclusion for affiliate program
-		  include('affiliate_english.php');
+		  require(DIR_WS_LANGUAGES . $_SESSION['language'].'/'.'affiliate_english.php');
 
   --> lang/english/admin/english.php
       add these lines at the end of the file (before the last ?>):
 		  // inclusion for affiliate program
-		  include('affiliate_english.php');
+		  require(DIR_FS_LANGUAGES . $_SESSION['language'].'/admin/'.'affiliate_english.php');
 
   --> lang/english/admin/configuration.php
 	  add these lines at the end of the file (before the last ?>):
 		  // inclusion for affiliate program
-		  include('affiliate_configuration.php');
+		  require(DIR_FS_LANGUAGES . $_SESSION['language'].'/admin/'.'affiliate_configuration.php');
 
   --> templates/xtc2/index.html
 	  after the following line: (or wherever in your template)
@@ -98,7 +98,7 @@ Hereafter just perform the following steps in their given order:
            $smarty->assign('tpl_path',DIR_WS_CATALOG.'templates/'.CURRENT_TEMPLATE.'/');
 	  add these lines:
 		   // inclusion for affiliate program
-		   include(DIR_WS_BOXES . 'affiliate.php');
+		   require(DIR_WS_BOXES . 'affiliate.php');
 
 		  
 4) Login as the admin and go to the admin section, where you can configure your

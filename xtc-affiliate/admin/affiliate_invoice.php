@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_invoice.php,v 1.2 2004/11/16 13:43:11 hubi74 Exp $
+   $Id: affiliate_invoice.php,v 1.3 2005/05/25 18:20:23 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -109,7 +109,7 @@
       <tr class="dataTableRow">
         <td class="dataTableContent" align="right" valign="top"><?php echo $affiliate_sales['affiliate_orders_id']; ?></td>
         <td class="dataTableContent" align="center" valign="top"><?php echo xtc_date_short($affiliate_sales['affiliate_date']); ?></td>
-        <td class="dataTableContent" align="right" valign="top"><b><?php echo $currencies->display_price($affiliate_sales['affiliate_value'], '')-$currencies->display_price($affiliate_sales['affiliate_value'], '')*0.16; ?></b></td>
+        <td class="dataTableContent" align="right" valign="top"><b><?php echo $currencies->display_price($affiliate_sales['affiliate_value'], ''); ?></b></td>
         <td class="dataTableContent" align="right" valign="top"><?php echo $affiliate_sales['affiliate_percent']; ?><?php echo ENTRY_PERCENT; ?></td>
         <td class="dataTableContent" align="right" valign="top"><b><?php echo $currencies->display_price($affiliate_sales['affiliate_payment'], ''); ?></b></td>
       </tr>

@@ -1,11 +1,12 @@
 {config_load file="$language/affiliate_lang_$language.conf" section="affiliate_details"}
 <font size="3" face="Verdana, Arial, Helvetica, sans-serif"><strong>{#heading_title#}</strong></font>
-<table width="100%" border="0" cellspacing="0" cellpadding="1" class="infoBox">
+
 {$FORM_ACTION}{$HIDDEN_ACTION}
+
 {$main_content}
-		</td>
-      </tr>
+	<table>
       <tr>
         <td align="right" class="main"><br>{$BUTTON_SUBMIT}</td>
       </tr>
+    </table>
 </form>

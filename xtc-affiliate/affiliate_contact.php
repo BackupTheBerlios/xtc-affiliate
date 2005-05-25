@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_contact.php,v 1.2 2004/04/05 18:59:11 hubi74 Exp $
+   $Id: affiliate_contact.php,v 1.3 2005/05/25 18:20:23 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -65,17 +65,19 @@ if (isset($_GET['action']) && ($_GET['action'] == 'send')) {
 $breadcrumb->add(NAVBAR_TITLE, xtc_href_link(FILENAME_AFFILIATE, '', 'SSL'));
 $breadcrumb->add(NAVBAR_TITLE_CONTACT, xtc_href_link(FILENAME_AFFILIATE_CONTACT));
 
-$affiliate_values = xtc_db_query("select * from " . TABLE_AFFILIATE . " where affiliate_id = '" . $_SESSION['affiliate_id'] . "'");
-
 require(DIR_WS_INCLUDES . 'header.php');
 
 if (isset($_GET['action']) && ($_GET['action'] == 'success')) {
     $smarty->assign('SUMMARY_LINK', '<a href="' . xtc_href_link(FILENAME_AFFILIATE_SUMMARY) . '">' . xtc_image_button('button_continue.gif', IMAGE_BUTTON_CONTINUE) . '</a>');
 }
 else {
+	// Get some values of the Affiliate
+	$affili_sql = xtc_db_query("SELECT affiliate_firstname, affiliate_lastname, affiliate_email_address FROM " . TABLE_AFFILIATE . " WHERE affiliate_id = " . $_SESSION['affiliate_id']);
+	$affili_res = xtc_db_fetch_array($affili_sql);
+	
     $smarty->assign('FORM_ACTION', xtc_draw_form('contact_us', xtc_href_link(FILENAME_AFFILIATE_CONTACT, 'action=send')));
-    $smarty->assign('INPUT_NAME', xtc_draw_input_field('name', $affiliate['affiliate_firstname'] . ' ' . $affiliate['affiliate_lastname'], 'size=40'));
-    $smarty->assign('INPUT_EMAIL', xtc_draw_input_field('email', $affiliate['affiliate_email_address'], 'size=40'));
+    $smarty->assign('INPUT_NAME', xtc_draw_input_field('name', $affili_res['affiliate_firstname'] . ' ' . $affili_res['affiliate_lastname'], 'size=40'));
+    $smarty->assign('INPUT_EMAIL', xtc_draw_input_field('email', $affili_res['affiliate_email_address'], 'size=40'));
     $smarty->assign('error', $error);
     $smarty->assign('TEXTAREA_ENQUIRY', xtc_draw_textarea_field('enquiry', 'soft', 50, 15, $_POST['enquiry']));
     $smarty->assign('BUTTON_SUBMIT', xtc_image_submit('button_continue.gif', IMAGE_BUTTON_CONTINUE));

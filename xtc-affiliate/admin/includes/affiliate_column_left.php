@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_column_left.php,v 1.1 2003/12/21 20:13:07 hubi74 Exp $
+   $Id: affiliate_column_left.php,v 1.2 2005/05/25 18:20:23 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -21,7 +21,7 @@
    Released under the GNU General Public License
    ---------------------------------------------------------------------------*/
    
-echo ('<div class="menuBoxHeading"><b>'.BOX_HEADING_AFFILIATE.'</b></div>');
+echo ('<div class="dataTableHeadingContent"><b>'.BOX_HEADING_AFFILIATE.'</b></div>');
 if (($_SESSION['customers_status']['customers_status_id'] == '0') && ($admin_access['configuration'] == '1')) echo '<a href="' . xtc_href_link(FILENAME_CONFIGURATION, 'gID=900', 'NONSSL') . '" class="menuBoxContentLink"> -' . BOX_AFFILIATE_CONFIGURATION . '</a><br>';
 if (($_SESSION['customers_status']['customers_status_id'] == '0') && ($admin_access['affiliate_affiliates'] == '1')) echo '<a href="' . xtc_href_link(FILENAME_AFFILIATE, '', 'NONSSL') . '" class="menuBoxContentLink"> -' . BOX_AFFILIATE . '</a><br>';
 if (($_SESSION['customers_status']['customers_status_id'] == '0') && ($admin_access['affiliate_banners'] == '1')) echo '<a href="' . xtc_href_link(FILENAME_AFFILIATE_BANNERS, '', 'NONSSL') . '" class="menuBoxContentLink"> -' . BOX_AFFILIATE_BANNERS . '</a><br>';

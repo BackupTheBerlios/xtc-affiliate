@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_invoice.php,v 1.1 2003/12/21 20:13:07 hubi74 Exp $
+   $Id: affiliate_invoice.php,v 1.2 2005/05/25 18:20:23 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -28,7 +28,7 @@ define('TEXT_AFFILIATE_PAYMENT', 'Provisionszahlung');
 define('TEXT_AFFILIATE_BILLED', 'Abrechnungsdatum');
 define('TABLE_HEADING_ORDER_ID', 'Bestell-Nr.');
 define('TABLE_HEADING_ORDER_DATE', 'Datum');
-define('TABLE_HEADING_ORDER_VALUE', 'Netto Bestellwert');
+define('TABLE_HEADING_ORDER_VALUE', 'Bestellwert');
 define('TABLE_HEADING_COMMISSION_RATE', '% Provision');
 define('TABLE_HEADING_COMMISSION_VALUE', 'Provision');
 

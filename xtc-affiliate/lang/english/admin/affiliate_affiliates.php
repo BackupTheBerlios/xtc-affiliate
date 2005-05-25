@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_affiliates.php,v 1.1 2003/12/21 20:13:07 hubi74 Exp $
+   $Id: affiliate_affiliates.php,v 1.2 2005/05/25 18:20:23 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -28,6 +28,7 @@ define('TABLE_HEADING_FIRSTNAME', 'First Name');
 define('TABLE_HEADING_LASTNAME', 'Last Name');
 define('TABLE_HEADING_USERHOMEPAGE', 'Homepage');
 define('TABLE_HEADING_COMMISSION','Commission');
+define('TABLE_HEADING_ACCOUNT','Account');
 define('TABLE_HEADING_ACCOUNT_CREATED', 'Account Created');
 define('TABLE_HEADING_ACTION', 'Action');
 define('TABLE_HEADING_AFFILIATE_ID','Affiliate ID');

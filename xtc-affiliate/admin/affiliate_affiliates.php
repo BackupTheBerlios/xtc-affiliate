@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_affiliates.php,v 1.1 2003/12/21 20:13:07 hubi74 Exp $
+   $Id: affiliate_affiliates.php,v 1.2 2005/05/25 18:20:23 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -117,7 +117,7 @@
 <title><?php echo TITLE; ?></title>
 <link rel="stylesheet" type="text/css" href="includes/stylesheet.css">
 </head>
-<body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" bgcolor="#FFFFFF" onload="SetFocus();">
+<body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" bgcolor="#FFFFFF">
 <!-- header //-->
 <?php require(DIR_WS_INCLUDES . 'header.php'); ?>
 <!-- header_eof //-->
@@ -367,6 +367,7 @@
                 <td class="dataTableHeadingContent"><?php echo TABLE_HEADING_LASTNAME; ?></td>
                 <td class="dataTableHeadingContent"><?php echo TABLE_HEADING_FIRSTNAME; ?></td>
                 <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_COMMISSION; ?></td>
+                <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_ACCOUNT; ?></td>
                 <td class="dataTableHeadingContent"><?php echo TABLE_HEADING_USERHOMEPAGE; ?></td>
                 <td class="dataTableHeadingContent" align="right"><?php echo TABLE_HEADING_ACTION; ?>&nbsp;</td>
               </tr>
@@ -376,7 +377,7 @@
       $keywords = xtc_db_input(xtc_db_prepare_input($_GET['search']));
       $search = " where affiliate_id like '" . $keywords . "' or affiliate_firstname like '" . $keywords . "' or affiliate_lastname like '" . $keywords . "' or affiliate_email_address like '" . $keywords . "'";
     }
-    $affiliate_query_raw = "select * from " . TABLE_AFFILIATE . $search . " order by affiliate_lastname";
+    $affiliate_query_raw = "select * from " . TABLE_AFFILIATE . $search . " order by affiliate_id DESC";
     $affiliate_split = new splitPageResults($_GET['page'], MAX_DISPLAY_SEARCH_RESULTS,
     $affiliate_query_raw, $affiliate_query_numrows);
     $affiliate_query = xtc_db_query($affiliate_query_raw);
@@ -393,6 +394,13 @@
         $aInfo_array = array_merge($affiliate, $affiliate_info);
         $aInfo = new objectInfo($aInfo_array);
       }
+      
+      // get the aktual amount of account
+      $time = mktime(1, 1, 1, date("m"), date("d") - AFFILIATE_BILLING_TIME, date("Y"));
+      $oldday = date("Y-m-d", $time);
+      $acnt_value = xtc_db_query("SELECT sum(a.affiliate_payment) as amount FROM " . TABLE_AFFILIATE_SALES . " a, " . TABLE_ORDERS . " o
+          WHERE a.affiliate_billing_status != 1 and a.affiliate_orders_id = o.orders_id and o.orders_status >= " . AFFILIATE_PAYMENT_ORDER_MIN_STATUS . " and a.affiliate_id = '" . $affiliate['affiliate_id'] . "' and a.affiliate_date <= '" . $oldday . "'");
+      $acnt_res = xtc_db_fetch_array($acnt_value);
 
       if ( (is_object($aInfo)) && ($affiliate['affiliate_id'] == $aInfo->affiliate_id) ) {
         echo '          <tr class="dataTableRowSelected" onmouseover="this.style.cursor=\'hand\'" onclick="document.location.href=\'' . xtc_href_link(FILENAME_AFFILIATE, xtc_get_all_get_params(array('acID', 'action')) . 'acID=' . $aInfo->affiliate_id . '&action=edit') . '\'">' . "\n";
@@ -405,8 +413,9 @@
                 <td class="dataTableContent"><?php echo $affiliate['affiliate_lastname']; ?></td>
                 <td class="dataTableContent"><?php echo $affiliate['affiliate_firstname']; ?></td>
                 <td class="dataTableContent" align="right"><?php if($affiliate['affiliate_commission_percent'] > AFFILIATE_PERCENT) echo $affiliate['affiliate_commission_percent']; else echo  AFFILIATE_PERCENT; ?> %</td>
-                <td class="dataTableContent"><?php echo '<a href="' . xtc_href_link(FILENAME_AFFILIATE, xtc_get_all_get_params(array('acID', 'action')) . 'acID=' . $affiliate['affiliate_id'] . '&action=edit') . '">' . xtc_image(DIR_WS_ICONS . 'preview.gif', ICON_PREVIEW) . '</a>'; echo '<a href="' . $affiliate['affiliate_homepage'] . '" target="_blank">' . $affiliate['affiliate_homepage'] . '</a>'; ?></td>
-                <td class="dataTableContent" align="right"><?php echo '<a href="' . xtc_href_link(FILENAME_AFFILIATE_STATISTICS, xtc_get_all_get_params(array('acID')) . 'acID=' . $affiliate['affiliate_id']) . '">' . xtc_image(DIR_WS_ICONS . 'statistics.gif', ICON_STATISTICS) . '</a>&nbsp;'; if ( (is_object($aInfo)) && ($affiliate['affiliate_id'] == $aInfo->affiliate_id) ) { echo xtc_image(DIR_WS_IMAGES . 'icon_arrow_right.gif', ''); } else { echo '<a href="' . xtc_href_link(FILENAME_AFFILIATE, xtc_get_all_get_params(array('acID')) . 'acID=' . $affiliate['affiliate_id']) . '">' . xtc_image(DIR_WS_IMAGES . 'icon_info.gif', IMAGE_ICON_INFO) . '</a>'; } ?>&nbsp;</td>
+                <td class="dataTableContent" align="right"><?php echo $currencies->display_price($acnt_res['amount'],''); ?></td>
+                <td class="dataTableContent"><?php echo '<a href="' . $affiliate['affiliate_homepage'] . '" target="_blank">' . $affiliate['affiliate_homepage'] . '</a>'; ?></td>
+                <td class="dataTableContent" align="right"><?php echo '<a href="' . xtc_href_link(FILENAME_AFFILIATE, xtc_get_all_get_params(array('acID', 'action')) . 'acID=' . $affiliate['affiliate_id'] . '&action=edit') . '">' . xtc_image(DIR_WS_ICONS . 'preview.gif', ICON_PREVIEW) . '</a><a href="' . xtc_href_link(FILENAME_AFFILIATE_STATISTICS, xtc_get_all_get_params(array('acID')) . 'acID=' . $affiliate['affiliate_id']) . '">' . xtc_image(DIR_WS_ICONS . 'statistics.gif', ICON_STATISTICS) . '</a>&nbsp;'; if ( (is_object($aInfo)) && ($affiliate['affiliate_id'] == $aInfo->affiliate_id) ) { echo xtc_image(DIR_WS_IMAGES . 'icon_arrow_right.gif', ''); } else { echo '<a href="' . xtc_href_link(FILENAME_AFFILIATE, xtc_get_all_get_params(array('acID')) . 'acID=' . $affiliate['affiliate_id']) . '">' . xtc_image(DIR_WS_IMAGES . 'icon_info.gif', IMAGE_ICON_INFO) . '</a>'; } ?>&nbsp;</td>
               </tr>
 <?php
     }

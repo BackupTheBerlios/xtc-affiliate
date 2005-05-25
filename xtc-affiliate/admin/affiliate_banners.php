@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_banners.php,v 1.1 2003/12/21 20:13:07 hubi74 Exp $
+   $Id: affiliate_banners.php,v 1.2 2005/05/25 18:20:23 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -68,6 +68,7 @@
           else {
           	$image_location = DIR_FS_CATALOG_IMAGES . $_FILES['affiliate_banners_image']['name'];
           	move_uploaded_file($_FILES['affiliate_banners_image']['tmp_name'], $image_location);
+          	@chmod($image_location, 0644);
 
             $db_image_location = $_FILES['affiliate_banners_image']['name'];
             

@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_german.php,v 1.1 2003/12/21 20:13:07 hubi74 Exp $
+   $Id: affiliate_german.php,v 1.2 2005/05/25 18:20:23 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -34,8 +34,8 @@ define('BOX_AFFILIATE_FAQ', 'FAQ');
 define('BOX_AFFILIATE_LOGIN', 'Partner Anmeldung');
 define('BOX_AFFILIATE_LOGOUT', 'Abmelden');
 
-define('ENTRY_AFFILIATE_ACCEPT_AGB', 'Bitte best&auml;tigen Sie, dass Sie mit unseren <a href="%s" target="_blank">AGB\'s</a> einverstanden sind.');
-define('ENTRY_AFFILIATE_AGB_ERROR', '&nbsp;<small><font color="#FF0000">Sie m&uuml;ssen sich mit unseren AGB\'s einverstanden erkl&auml;ren.</font></small>');
+define('ENTRY_AFFILIATE_ACCEPT_AGB', 'Bitte best&auml;tigen Sie, dass Sie mit unseren <a href="%s" target="_blank">AGB</a> einverstanden sind.');
+define('ENTRY_AFFILIATE_AGB_ERROR', '&nbsp;<small><font color="#FF0000">Sie m&uuml;ssen sich mit unseren AGB einverstanden erkl&auml;ren.</font></small>');
 define('ENTRY_AFFILIATE_PAYMENT_CHECK_TEXT', '');
 define('ENTRY_AFFILIATE_PAYMENT_CHECK_ERROR', '&nbsp;<small><font color="#FF0000">erforderlich</font></small>');
 define('ENTRY_AFFILIATE_PAYMENT_PAYPAL_TEXT', '');

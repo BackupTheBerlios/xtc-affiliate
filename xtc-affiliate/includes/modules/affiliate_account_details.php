@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_account_details.php,v 1.1 2003/12/21 20:13:07 hubi74 Exp $
+   $Id: affiliate_account_details.php,v 1.2 2005/05/25 18:20:23 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -40,35 +40,38 @@ if (ACCOUNT_GENDER == 'true') {
 	$male = ($affiliate['affiliate_gender'] == 'm') ? true : false;
     $female = ($affiliate['affiliate_gender'] == 'f') ? true : false;
     if ($is_read_only == true) {
-    	$gender_content = ($affiliate['affiliate_gender'] == 'm') ? MALE : FEMALE;
+    	$gender_male = ($affiliate['affiliate_gender'] == 'm') ? MALE : FEMALE;
     }
 	elseif ($error == true) {
 		if ($entry_gender_error == true) {
-			$gender_content = xtc_draw_radio_field('a_gender', 'm', $male) . '&nbsp;&nbsp;' . MALE . '&nbsp;&nbsp;' . xtc_draw_radio_field('a_gender', 'f', $female) . '&nbsp;&nbsp;' . FEMALE . '&nbsp;' . ENTRY_GENDER_ERROR;
+			$gender_male = xtc_draw_radio_field(array('name'=>'a_gender', 'suffix'=>MALE), 'm', $male);
+			$gender_female = xtc_draw_radio_field(array('name'=>'a_gender', 'suffix'=>FEMALE, 'text'=>ENTRY_GENDER_ERROR), 'f', $female);
 		}
 		else {
-			$gender_content = ($a_gender == 'm') ? MALE : FEMALE;
-			$gender_content .= xtc_draw_hidden_field('a_gender');
+			$gender_male = ($a_gender == 'm') ? MALE : FEMALE;
+			$gender_female = xtc_draw_hidden_field('a_gender');
 		}
 	}
 	else {
-		$gender_content = xtc_draw_radio_field('a_gender', 'm', $male) . '&nbsp;&nbsp;' . MALE . '&nbsp;&nbsp;' . xtc_draw_radio_field('a_gender', 'f', $female) . '&nbsp;&nbsp;' . FEMALE . '&nbsp;' . ENTRY_GENDER_TEXT;
+		$gender_male = xtc_draw_radio_field(array('name'=>'a_gender', 'suffix'=>MALE), 'm', $male);
+		$gender_female = xtc_draw_radio_field(array('name'=>'a_gender', 'suffix'=>FEMALE, 'text'=>ENTRY_GENDER_TEXT), 'f', $female);
     }
-    $module_smarty->assign('gender_content', $gender_content);
+    $module_smarty->assign('gender_male', $gender_male);
+    $module_smarty->assign('gender_female', $gender_female);
 }
 
 if ($is_read_only == true) {
     $firstname_content = $affiliate['affiliate_firstname'];
 } elseif ($error == true) {
     if ($entry_firstname_error == true) {
-    	$firstname_content = xtc_draw_input_field('a_firstname') . '&nbsp;' . ENTRY_FIRST_NAME_ERROR;
+    	$firstname_content = xtc_draw_input_fieldNote(array('name'=>'a_firstname', 'text'=>'&nbsp;' . ENTRY_FIRST_NAME_ERROR));
     }
 	else {
 		$firstname_content = $a_firstname . xtc_draw_hidden_field('a_firstname');
     }
 }
 else {
-	$firstname_content = xtc_draw_input_field('a_firstname', $affiliate['affiliate_firstname']) . '&nbsp;' . ENTRY_FIRST_NAME_TEXT;
+	$firstname_content = xtc_draw_input_fieldNote(array('name'=>'a_firstname', 'text'=>'&nbsp;' . ENTRY_FIRST_NAME_TEXT), $affiliate['affiliate_firstname']);
 }
 $module_smarty->assign('firstname_content', $firstname_content);
 
@@ -77,14 +80,14 @@ if ($is_read_only == true) {
 }
 elseif ($error == true) {
 	if ($entry_lastname_error == true) {
-		$lastname_content = xtc_draw_input_field('a_lastname') . '&nbsp;' . ENTRY_LAST_NAME_ERROR;
+		$lastname_content = xtc_draw_input_fieldNote(array('name'=>'a_lastname', 'text'=>'&nbsp;' . ENTRY_LAST_NAME_ERROR));
     }
 	else {
 		$lastname_content = $a_lastname . xtc_draw_hidden_field('a_lastname');
     }
 }
 else {
-	$lastname_content = xtc_draw_input_field('a_lastname', $affiliate['affiliate_lastname']) . '&nbsp;' . ENTRY_FIRST_NAME_TEXT;
+	$lastname_content = xtc_draw_input_fieldNote(array('name'=>'a_lastname', 'text'=>'&nbsp;' . ENTRY_FIRST_NAME_TEXT), $affiliate['affiliate_lastname']);
 }
 $module_smarty->assign('lastname_content', $lastname_content);
 
@@ -95,14 +98,14 @@ if (ACCOUNT_DOB == 'true') {
     }
 	elseif ($error == true) {
 		if ($entry_date_of_birth_error == true) {
-			$dob_content = xtc_draw_input_field('a_dob') . '&nbsp;' . ENTRY_DATE_OF_BIRTH_ERROR;
+			$dob_content = xtc_draw_input_fieldNote(array('name'=>'a_dob', 'text'=>'&nbsp;' . ENTRY_DATE_OF_BIRTH_ERROR));
 		}
 		else {
 			$dob_content = $a_dob . xtc_draw_hidden_field('a_dob');
       	}
     }
 	else {
-		$dob_content = xtc_draw_input_field('a_dob', xtc_date_short($affiliate['affiliate_dob'])) . '&nbsp;' . ENTRY_DATE_OF_BIRTH_TEXT;
+		$dob_content = xtc_draw_input_fieldNote(array('name'=>'a_dob', 'text'=>'&nbsp;' . ENTRY_DATE_OF_BIRTH_TEXT), xtc_date_short($affiliate['affiliate_dob']));
     }
     $module_smarty->assign('dob_content', $dob_content);
 }
@@ -112,20 +115,20 @@ if ($is_read_only == true) {
 }
 elseif ($error == true) {
 	if ($entry_email_address_error == true) {
-		$email_content = xtc_draw_input_field('a_email_address') . '&nbsp;' . ENTRY_EMAIL_ADDRESS_ERROR;
+		$email_content = xtc_draw_input_fieldNote(array('name'=>'a_email_address', 'text'=>'&nbsp;' . ENTRY_EMAIL_ADDRESS_ERROR));
     }
 	elseif ($entry_email_address_check_error == true) {
-		$email_content = xtc_draw_input_field('a_email_address') . '&nbsp;' . ENTRY_EMAIL_ADDRESS_CHECK_ERROR;
+		$email_content = xtc_draw_input_fieldNote(array('name'=>'a_email_address', 'text'=>'&nbsp;' . ENTRY_EMAIL_ADDRESS_CHECK_ERROR));
     }
 	elseif ($entry_email_address_exists == true) {
-		$email_content = xtc_draw_input_field('a_email_address') . '&nbsp;' . ENTRY_EMAIL_ADDRESS_ERROR_EXISTS;
+		$email_content = xtc_draw_input_fieldNote(array('name'=>'a_email_address', 'text'=>'&nbsp;' . ENTRY_EMAIL_ADDRESS_ERROR_EXISTS));
     }
 	else {
 		$email_content = $a_email_address . xtc_draw_hidden_field('a_email_address');
     }
 }
 else {
-	$email_content = xtc_draw_input_field('a_email_address', $affiliate['affiliate_email_address']) . '&nbsp;' . ENTRY_EMAIL_ADDRESS_TEXT;
+	$email_content = xtc_draw_input_fieldNote(array('name'=>'a_email_address', 'text'=>'&nbsp;' . ENTRY_EMAIL_ADDRESS_TEXT), $affiliate['affiliate_email_address']);
 }
 $module_smarty->assign('email_content', $email_content);
 
@@ -136,14 +139,14 @@ if (ACCOUNT_COMPANY == 'true') {
     }
 	elseif ($error == true) {
 		if ($entry_company_error == true) {
-			$company_content = xtc_draw_input_field('a_company') . '&nbsp;' . ENTRY_AFFILIATE_COMPANY_ERROR;
+			$company_content = xtc_draw_input_fieldNote(array('name'=>'a_company', 'text'=>'&nbsp;' . ENTRY_AFFILIATE_COMPANY_ERROR));
 		}
 		else {
 			$company_content = $a_company . xtc_draw_hidden_field('a_company');
 		}
     }
 	else {
-		$company_content = xtc_draw_input_field('a_company', $affiliate['affiliate_company']) . '&nbsp;' . ENTRY_AFFILIATE_COMPANY_TEXT;
+		$company_content = xtc_draw_input_fieldNote(array('name'=>'a_company', 'text'=>'&nbsp;' . ENTRY_AFFILIATE_COMPANY_TEXT), $affiliate['affiliate_company']);
     }
     $module_smarty->assign('company_content', $company_content);
 
@@ -152,14 +155,14 @@ if (ACCOUNT_COMPANY == 'true') {
     }
 	elseif ($error == true) {
 		if ($entry_company_taxid_error == true) {
-			$company_taxid_content = xtc_draw_input_field('a_company_taxid') . '&nbsp;' . ENTRY_AFFILIATE_COMPANY_TAXID_ERROR;
+			$company_taxid_content = xtc_draw_input_fieldNote(array('name'=>'a_company_taxid', 'text'=>'&nbsp;' . ENTRY_AFFILIATE_COMPANY_TAXID_ERROR));
 		}
 		else {
 			$company_taxid_content = $a_company_taxid . xtc_draw_hidden_field('a_company_taxid');
 		}
     }
 	else {
-		$company_taxid_content = xtc_draw_input_field('a_company_taxid', $affiliate['affiliate_company_taxid']) . '&nbsp;' . ENTRY_AFFILIATE_COMPANY_TAXID_TEXT;
+		$company_taxid_content = xtc_draw_input_fieldNote(array('name'=>'a_company_taxid', 'text'=>'&nbsp;' . ENTRY_AFFILIATE_COMPANY_TAXID_TEXT), $affiliate['affiliate_company_taxid']);
     }
     $module_smarty->assign('company_taxid_content', $company_taxid_content);
 }
@@ -171,14 +174,14 @@ if (AFFILIATE_USE_CHECK == 'true') {
     }
 	elseif ($error == true) {
 		if ($entry_payment_check_error == true) {
-			$payment_check_content = xtc_draw_input_field('a_payment_check') . '&nbsp;' . ENTRY_AFFILIATE_PAYMENT_CHECK_ERROR;
+			$payment_check_content = xtc_draw_input_fieldNote(array('name'=>'a_payment_check', 'text'=>'&nbsp;' . ENTRY_AFFILIATE_PAYMENT_CHECK_ERROR));
 		}
 		else {
 			$payment_check_content = $a_payment_check . xtc_draw_hidden_field('a_payment_check');
 		}
     }
 	else {
-		$payment_check_content = xtc_draw_input_field('a_payment_check', $affiliate['affiliate_payment_check']) . '&nbsp;' . ENTRY_AFFILIATE_PAYMENT_CHECK_TEXT;
+		$payment_check_content = xtc_draw_input_fieldNote(array('name'=>'a_payment_check', 'text'=>'&nbsp;' . ENTRY_AFFILIATE_PAYMENT_CHECK_TEXT), $affiliate['affiliate_payment_check']);
 	}
 	$module_smarty->assign('payment_check_content', $payment_check_content);
 }
@@ -190,14 +193,14 @@ if (AFFILIATE_USE_PAYPAL == 'true') {
     }
 	elseif ($error == true) {
 		if ($entry_payment_paypal_error == true) {
-			$payment_paypal_content = xtc_draw_input_field('a_payment_paypal') . '&nbsp;' . ENTRY_AFFILIATE_PAYMENT_PAYPAL_ERROR;
+			$payment_paypal_content = xtc_draw_input_fieldNote(array('name'=>'a_payment_paypal', 'text'=>'&nbsp;' . ENTRY_AFFILIATE_PAYMENT_PAYPAL_ERROR));
 		}
 		else {
 			$payment_paypal_content = $a_payment_paypal . xtc_draw_hidden_field('a_payment_paypal');
 		}
 	}
 	else {
-		$payment_paypal_content = xtc_draw_input_field('a_payment_paypal', $affiliate['affiliate_payment_paypal']) . '&nbsp;' . ENTRY_AFFILIATE_PAYMENT_PAYPAL_TEXT;
+		$payment_paypal_content = xtc_draw_input_fieldNote(array('name'=>'a_payment_paypal', 'text'=>'&nbsp;' . ENTRY_AFFILIATE_PAYMENT_PAYPAL_TEXT), $affiliate['affiliate_payment_paypal']);
     }
     $module_smarty->assign('payment_paypal_content', $payment_paypal_content);
 }
@@ -209,14 +212,14 @@ if (AFFILIATE_USE_BANK == 'true') {
     }
 	elseif ($error == true) {
 		if ($entry_payment_bank_name_error == true) {
-			$payment_bank_name_content = xtc_draw_input_field('a_payment_bank_name') . '&nbsp;' . ENTRY_AFFILIATE_PAYMENT_BANK_NAME_ERROR;
+			$payment_bank_name_content = xtc_draw_input_fieldNote(array('name'=>'a_payment_bank_name', 'text'=>'&nbsp;' . ENTRY_AFFILIATE_PAYMENT_BANK_NAME_ERROR));
 		}
 		else {
 			$payment_bank_name_content = $a_payment_bank_name . xtc_draw_hidden_field('a_payment_bank_name');
 		}
 	}
 	else {
-		$payment_bank_name_content = xtc_draw_input_field('a_payment_bank_name', $affiliate['affiliate_payment_bank_name']) . '&nbsp;' . ENTRY_AFFILIATE_PAYMENT_BANK_NAME_TEXT;
+		$payment_bank_name_content = xtc_draw_input_fieldNote(array('name'=>'a_payment_bank_name', 'text'=>'&nbsp;' . ENTRY_AFFILIATE_PAYMENT_BANK_NAME_TEXT), $affiliate['affiliate_payment_bank_name']);
     }
     $module_smarty->assign('payment_bank_name_content', $payment_bank_name_content);
     
@@ -225,14 +228,14 @@ if (AFFILIATE_USE_BANK == 'true') {
     }
 	elseif ($error == true) {
 		if ($entry_payment_bank_branch_number_error == true) {
-			$payment_bank_branch_number_content = xtc_draw_input_field('a_payment_bank_branch_number') . '&nbsp;' . ENTRY_AFFILIATE_PAYMENT_BANK_BRANCH_NUMBER_ERROR;
+			$payment_bank_branch_number_content = xtc_draw_input_fieldNote(array('name'=>'a_payment_bank_branch_number', 'text'=>'&nbsp;' . ENTRY_AFFILIATE_PAYMENT_BANK_BRANCH_NUMBER_ERROR));
 		}
 		else {
 			$payment_bank_branch_number_content = $a_payment_bank_branch_number . xtc_draw_hidden_field('a_payment_bank_branch_number');
 		}
 	}
 	else {
-		$payment_bank_branch_number_content = xtc_draw_input_field('a_payment_bank_branch_number', $affiliate['affiliate_payment_bank_branch_number']) . '&nbsp;' . ENTRY_AFFILIATE_PAYMENT_BANK_BRANCH_NUMBER_TEXT;
+		$payment_bank_branch_number_content = xtc_draw_input_fieldNote(array('name'=>'a_payment_bank_branch_number', 'text'=>'&nbsp;' . ENTRY_AFFILIATE_PAYMENT_BANK_BRANCH_NUMBER_TEXT), $affiliate['affiliate_payment_bank_branch_number']);
     }
     $module_smarty->assign('payment_bank_branch_number_content', $payment_bank_branch_number_content);
     
@@ -241,14 +244,14 @@ if (AFFILIATE_USE_BANK == 'true') {
     }
 	elseif ($error == true) {
 		if ($entry_payment_bank_swift_code_error == true) {
-			$payment_bank_swift_code_content = xtc_draw_input_field('a_payment_bank_swift_code') . '&nbsp;' . ENTRY_AFFILIATE_PAYMENT_BANK_SWIFT_CODE_ERROR;
+			$payment_bank_swift_code_content = xtc_draw_input_fieldNote(array('name'=>'a_payment_bank_swift_code', 'text'=>'&nbsp;' . ENTRY_AFFILIATE_PAYMENT_BANK_SWIFT_CODE_ERROR));
 		}
 		else {
 			$payment_bank_swift_code_content = $a_payment_bank_swift_code . xtc_draw_hidden_field('a_payment_bank_swift_code');
 		}
 	}
 	else {
-		$payment_bank_swift_code_content = xtc_draw_input_field('a_payment_bank_swift_code', $affiliate['affiliate_payment_bank_swift_code']) . '&nbsp;' . ENTRY_AFFILIATE_PAYMENT_BANK_SWIFT_CODE_TEXT;
+		$payment_bank_swift_code_content = xtc_draw_input_fieldNote(array('name'=>'a_payment_bank_swift_code', 'text'=>'&nbsp;' . ENTRY_AFFILIATE_PAYMENT_BANK_SWIFT_CODE_TEXT), $affiliate['affiliate_payment_bank_swift_code']);
     }
     $module_smarty->assign('payment_bank_swift_code_content', $payment_bank_swift_code_content);
     
@@ -257,14 +260,14 @@ if (AFFILIATE_USE_BANK == 'true') {
     }
 	elseif ($error == true) {
 		if ($entry_payment_bank_account_name_error == true) {
-			$payment_bank_account_name_content = xtc_draw_input_field('a_payment_bank_account_name') . '&nbsp;' . ENTRY_AFFILIATE_PAYMENT_BANK_ACCOUNT_NAME_ERROR;
+			$payment_bank_account_name_content = xtc_draw_input_fieldNote(array('name'=>'a_payment_bank_account_name', 'text'=>'&nbsp;' . ENTRY_AFFILIATE_PAYMENT_BANK_ACCOUNT_NAME_ERROR));
 		}
 		else {
 			$payment_bank_account_name_content = $a_payment_bank_account_name . xtc_draw_hidden_field('a_payment_bank_account_name');
 		}
 	}
 	else {
-		$payment_bank_account_name_content = xtc_draw_input_field('a_payment_bank_account_name', $affiliate['affiliate_payment_bank_account_name']) . '&nbsp;' . ENTRY_AFFILIATE_PAYMENT_BANK_ACCOUNT_NAME_TEXT;
+		$payment_bank_account_name_content = xtc_draw_input_fieldNote(array('name'=>'a_payment_bank_account_name', 'text'=>'&nbsp;' . ENTRY_AFFILIATE_PAYMENT_BANK_ACCOUNT_NAME_TEXT), $affiliate['affiliate_payment_bank_account_name']);
     }
     $module_smarty->assign('payment_bank_account_name_content', $payment_bank_account_name_content);
     
@@ -273,14 +276,14 @@ if (AFFILIATE_USE_BANK == 'true') {
     }
 	elseif ($error == true) {
 		if ($entry_payment_bank_account_number_error == true) {
-			$payment_bank_account_number_content = xtc_draw_input_field('a_payment_bank_account_number') . '&nbsp;' . ENTRY_AFFILIATE_PAYMENT_BANK_ACCOUNT_NUMBER_ERROR;
+			$payment_bank_account_number_content = xtc_draw_input_fieldNote(array('name'=>'a_payment_bank_account_number', 'text'=>'&nbsp;' . ENTRY_AFFILIATE_PAYMENT_BANK_ACCOUNT_NUMBER_ERROR));
 		}
 		else {
 			$payment_bank_account_number_content = $a_payment_bank_account_number . xtc_draw_hidden_field('a_payment_bank_account_number');
 		}
 	}
 	else {
-		$payment_bank_account_number_content = xtc_draw_input_field('a_payment_bank_account_number', $affiliate['affiliate_payment_bank_account_number']) . '&nbsp;' . ENTRY_AFFILIATE_PAYMENT_BANK_ACCOUNT_NUMBER_TEXT;
+		$payment_bank_account_number_content = xtc_draw_input_fieldNote(array('name'=>'a_payment_bank_account_number', 'text'=>'&nbsp;' . ENTRY_AFFILIATE_PAYMENT_BANK_ACCOUNT_NUMBER_TEXT), $affiliate['affiliate_payment_bank_account_number']);
     }
     $module_smarty->assign('payment_bank_account_number_content', $payment_bank_account_number_content);
 }
@@ -290,14 +293,14 @@ if ($is_read_only == true) {
 }
 elseif ($error == true) {
 	if ($entry_street_address_error == true) {
-		$street_address_content = xtc_draw_input_field('a_street_address') . '&nbsp;' . ENTRY_STREET_ADDRESS_ERROR;
+		$street_address_content = xtc_draw_input_fieldNote(array('name'=>'a_street_address', 'text'=>'&nbsp;' . ENTRY_STREET_ADDRESS_ERROR));
     }
 	else {
 		$street_address_content = $a_street_address . xtc_draw_hidden_field('a_street_address');
     }
 }
 else {
-	$street_address_content = xtc_draw_input_field('a_street_address', $affiliate['affiliate_street_address']) . '&nbsp;' . ENTRY_STREET_ADDRESS_TEXT;
+	$street_address_content = xtc_draw_input_fieldNote(array('name'=>'a_street_address', 'text'=>'&nbsp;' . ENTRY_STREET_ADDRESS_TEXT), $affiliate['affiliate_street_address']);
 }
 $module_smarty->assign('street_address_content', $street_address_content);
 
@@ -308,14 +311,14 @@ if (ACCOUNT_SUBURB == 'true') {
     }
 	elseif ($error == true) {
 		if ($entry_suburb_error == true) {
-			$suburb_content = xtc_draw_input_field('a_suburb') . '&nbsp;' . ENTRY_SUBURB_ERROR;
+			$suburb_content = xtc_draw_input_fieldNote(array('name'=>'a_suburb', 'text'=>'&nbsp;' . ENTRY_SUBURB_ERROR));
 		}
 		else {
 			$suburb_content = $a_suburb . xtc_draw_hidden_field('a_suburb');
 		}
 	}
 	else {
-		$suburb_content = xtc_draw_input_field('a_suburb', $affiliate['affiliate_suburb']) . '&nbsp;' . ENTRY_SUBURB_TEXT;
+		$suburb_content = xtc_draw_input_fieldNote(array('name'=>'a_suburb', 'text'=>'&nbsp;' . ENTRY_SUBURB_TEXT), $affiliate['affiliate_suburb']);
     }
     $module_smarty->assign('suburb_content', $suburb_content);
 }
@@ -325,14 +328,14 @@ if ($is_read_only == true) {
 }
 elseif ($error == true) {
 	if ($entry_post_code_error == true) {
-		$postcode_content = xtc_draw_input_field('a_postcode') . '&nbsp;' . ENTRY_POST_CODE_ERROR;
+		$postcode_content = xtc_draw_input_fieldNote(array('name'=>'a_postcode', 'text'=>'&nbsp;' . ENTRY_POST_CODE_ERROR));
     }
 	else {
 		$postcode_content = $a_postcode . xtc_draw_hidden_field('a_postcode');
     }
 }
 else {
-	$postcode_content = xtc_draw_input_field('a_postcode', $affiliate['affiliate_postcode']) . '&nbsp;' . ENTRY_POST_CODE_TEXT;
+	$postcode_content = xtc_draw_input_fieldNote(array('name'=>'a_postcode', 'text'=>'&nbsp;' . ENTRY_POST_CODE_TEXT), $affiliate['affiliate_postcode']);
 }
 $module_smarty->assign('postcode_content', $postcode_content);
 
@@ -341,14 +344,14 @@ if ($is_read_only == true) {
 }
 elseif ($error == true) {
 	if ($entry_city_error == true) {
-		$city_content = xtc_draw_input_field('a_city') . '&nbsp;' . ENTRY_CITY_ERROR;
+		$city_content = xtc_draw_input_fieldNote(array('name'=>'a_city', 'text'=>'&nbsp;' . ENTRY_CITY_ERROR));
     }
 	else {
 		$city_content = $a_city . xtc_draw_hidden_field('a_city');
     }
 }
 else {
-	$city_content = xtc_draw_input_field('a_city', $affiliate['affiliate_city']) . '&nbsp;' . ENTRY_CITY_TEXT;
+	$city_content = xtc_draw_input_fieldNote(array('name'=>'a_city', 'text'=>'&nbsp;' . ENTRY_CITY_TEXT), $affiliate['affiliate_city']);
 }
 $module_smarty->assign('city_content', $city_content);
 
@@ -357,14 +360,14 @@ if ($is_read_only == true) {
 }
 elseif ($error == true) {
 	if ($entry_country_error == true) {
-		$country_id_content = xtc_get_country_list('a_country') . '&nbsp;' . ENTRY_COUNTRY_ERROR;
+		$country_id_content = xtc_get_country_list(array('name'=>'a_country', 'text'=>'&nbsp;' . ENTRY_COUNTRY_ERROR));
     }
 	else {
 		$country_id_content = xtc_get_country_name($a_country) . xtc_draw_hidden_field('a_country');
     }
 }
 else {
-	$country_id_content = xtc_get_country_list('a_country', $affiliate['affiliate_country_id']) . '&nbsp;' . ENTRY_COUNTRY_TEXT;
+	$country_id_content = xtc_get_country_list(array('name'=>'a_country', 'text'=>'&nbsp;' . ENTRY_COUNTRY_TEXT), $affiliate['affiliate_country_id']);
 }
 $module_smarty->assign('country_id_content', $country_id_content);
 
@@ -382,10 +385,10 @@ if (ACCOUNT_STATE == 'true') {
 				while ($zones_values = xtc_db_fetch_array($zones_query)) {
 					$zones_array[] = array('id' => $zones_values['zone_name'], 'text' => $zones_values['zone_name']);
 				}
-				$state_content = xtc_draw_pull_down_menu('a_state', $zones_array) . '&nbsp;' . ENTRY_STATE_ERROR;
+				$state_content = xtc_draw_pull_down_menuNote(array('name'=>'a_state', 'text'=>'&nbsp;' . ENTRY_STATE_ERROR), $zones_array);
 			}
 			else {
-				$state_content = xtc_draw_input_field('a_state') . '&nbsp;' . ENTRY_STATE_ERROR;
+				$state_content = xtc_draw_input_fieldNote(array('name'=>'a_state', 'text'=>'&nbsp;' . ENTRY_STATE_ERROR));
 			}
 		}
 		else {
@@ -393,7 +396,7 @@ if (ACCOUNT_STATE == 'true') {
 		}
 	}
 	else {
-		$state_content = xtc_draw_input_field('a_state', xtc_get_zone_name($affiliate['affiliate_country_id'], $affiliate['affiliate_zone_id'], $affiliate['affiliate_state'])) . '&nbsp;' . ENTRY_STATE_TEXT;
+		$state_content = xtc_draw_input_fieldNote(array('name'=>'a_state', 'text'=>'&nbsp;' . ENTRY_STATE_TEXT), xtc_get_zone_name($affiliate['affiliate_country_id'], $affiliate['affiliate_zone_id'], $affiliate['affiliate_state']));
 	}
 	$module_smarty->assign('state_content', $state_content);
 }
@@ -402,14 +405,14 @@ if ($is_read_only == true) {
 	$telephone_content = $affiliate['affiliate_telephone'];
 } elseif ($error == true) {
     if ($entry_telephone_error == true) {
-    	$telephone_content = xtc_draw_input_field('a_telephone') . '&nbsp;' . ENTRY_TELEPHONE_NUMBER_ERROR;
+    	$telephone_content = xtc_draw_input_fieldNote(array('name'=>'a_telephone', 'text'=>'&nbsp;' . ENTRY_TELEPHONE_NUMBER_ERROR));
     }
 	else {
 		$telephone_content = $a_telephone . xtc_draw_hidden_field('a_telephone');
     }
 }
 else {
-	$telephone_content = xtc_draw_input_field('a_telephone', $affiliate['affiliate_telephone']) . '&nbsp;' . ENTRY_TELEPHONE_NUMBER_TEXT;
+	$telephone_content = xtc_draw_input_fieldNote(array('name'=>'a_telephone', 'text'=>'&nbsp;' . ENTRY_TELEPHONE_NUMBER_TEXT), $affiliate['affiliate_telephone']);
 }
 $module_smarty->assign('telephone_content', $telephone_content);
 
@@ -418,14 +421,14 @@ if ($is_read_only == true) {
 }
 elseif ($error == true) {
 	if ($entry_fax_error == true) {
-		$fax_content = xtc_draw_input_field('a_fax') . '&nbsp;' . ENTRY_FAX_NUMBER_ERROR;
+		$fax_content = xtc_draw_input_fieldNote(array('name'=>'a_fax', 'text'=>'&nbsp;' . ENTRY_FAX_NUMBER_ERROR));
     }
 	else {
 		$fax_content = $a_fax . xtc_draw_hidden_field('a_fax');
     }
 }
 else {
-	$fax_content = xtc_draw_input_field('a_fax', $affiliate['affiliate_fax']) . '&nbsp;' . ENTRY_FAX_NUMBER_TEXT;
+	$fax_content = xtc_draw_input_fieldNote(array('name'=>'a_fax', 'text'=>'&nbsp;' . ENTRY_FAX_NUMBER_TEXT), $affiliate['affiliate_fax']);
 }
 $module_smarty->assign('fax_content', $fax_content);
 
@@ -434,14 +437,14 @@ if ($is_read_only == true) {
 }
 elseif ($error == true) {
 	if ($entry_homepage_error == true) {
-		$homepage_content = xtc_draw_input_field('a_homepage') . '&nbsp;' . ENTRY_AFFILIATE_HOMEPAGE_ERROR;
+		$homepage_content = xtc_draw_input_fieldNote(array('name'=>'a_homepage', 'text'=>'&nbsp;' . ENTRY_AFFILIATE_HOMEPAGE_ERROR));
     }
 	else {
 		$homepage_content = $a_homepage . xtc_draw_hidden_field('a_homepage');
     }
 }
 else {
-	$homepage_content = xtc_draw_input_field('a_homepage', $affiliate['affiliate_homepage']) . '&nbsp;' . ENTRY_AFFILIATE_HOMEPAGE_TEXT;
+	$homepage_content = xtc_draw_input_fieldNote(array('name'=>'a_homepage', 'text'=>'&nbsp;' . ENTRY_AFFILIATE_HOMEPAGE_TEXT), $affiliate['affiliate_homepage']);
 }
 $module_smarty->assign('homepage_content', $homepage_content);
 
@@ -450,19 +453,19 @@ if ($is_read_only == false) {
     if ($error == true) {
     	$module_smarty->assign('error', 'true');
     	if ($entry_password_error == true) {
-    		$password_content = xtc_draw_password_field('a_password') . '&nbsp;' . ENTRY_PASSWORD_ERROR;
+    		$password_content = xtc_draw_password_fieldNote(array('name'=>'a_password', 'text'=>'&nbsp;' . ENTRY_PASSWORD_ERROR));
     	}
 		else {
 			$password_content = PASSWORD_HIDDEN . xtc_draw_hidden_field('a_password') . xtc_draw_hidden_field('a_confirmation');
 		}
 	}
 	else {
-		$password_content = xtc_draw_password_field('a_password') . '&nbsp;' . ENTRY_PASSWORD_TEXT;
+		$password_content = xtc_draw_password_fieldNote(array('name'=>'a_password', 'text'=>'&nbsp;' . ENTRY_PASSWORD_TEXT));
     }
     if ( ($error == false) || ($entry_password_error == true) ) {
-    	$password_confirmation_content = xtc_draw_password_field('a_confirmation') . '&nbsp;' . ENTRY_PASSWORD_CONFIRMATION_TEXT;
+    	$password_confirmation_content = xtc_draw_password_fieldNote(array('name'=>'a_confirmation', 'text'=>'&nbsp;' . ENTRY_PASSWORD_CONFIRMATION_TEXT));
     }
-    $agb_content = xtc_draw_checkbox_field('a_agb', $value = '1', $checked = $affiliate['affiliate_agb']) . sprintf(ENTRY_AFFILIATE_ACCEPT_AGB, xtc_href_link(FILENAME_CONTENT,'coID=900', 'SSL'));
+    $agb_content = xtc_draw_selection_fieldNote(array('name'=>'a_agb', 'text'=>sprintf(ENTRY_AFFILIATE_ACCEPT_AGB, xtc_href_link(FILENAME_CONTENT,'coID=900', 'SSL'))), 'checkbox', $value = '1', $checked = $affiliate['affiliate_agb']);
     if ($entry_agb_error == true) {
       $agb_content .= "<br>".ENTRY_AFFILIATE_AGB_ERROR;
     }

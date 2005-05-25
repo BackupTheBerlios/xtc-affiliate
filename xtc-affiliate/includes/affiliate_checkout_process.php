@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_checkout_process.php,v 1.1 2003/12/21 20:13:07 hubi74 Exp $
+   $Id: affiliate_checkout_process.php,v 1.2 2005/05/25 18:20:23 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -26,7 +26,7 @@ $affiliate_total = 0;
 for ($i=0, $n=sizeof($order->products); $i<$n; $i++) {
 	$affiliate_total += $order->products[$i]['price'] * $order->products[$i]['qty'];
 }
-$affiliate_total = xtc_round($affiliate_total, 2);
+$affiliate_total = round($affiliate_total, 2);
 
 // Check for individual commission
 $affiliate_percentage = 0;
@@ -36,7 +36,7 @@ if (AFFILATE_INDIVIDUAL_PERCENTAGE == 'true') {
     $affiliate_percent = $affiliate_commission['affiliate_commission_percent'];
 }
 if ($affiliate_percent < AFFILIATE_PERCENT) $affiliate_percent = AFFILIATE_PERCENT;
-$affiliate_payment = xtc_round(($affiliate_total * $affiliate_percent / 100), 2);
+$affiliate_payment = round(($affiliate_total * $affiliate_percent / 100), 2);
    
 if (isset($_SESSION['affiliate_ref'])) {
 	$sql_data_array = array('affiliate_id' => $_SESSION['affiliate_ref'],
@@ -64,7 +64,7 @@ if (isset($_SESSION['affiliate_ref'])) {
       	$i=0;
       	while ($affiliate_tiers_array = xtc_db_fetch_array($affiliate_tiers_query)) {
       		$affiliate_percent = $affiliate_tier_percentage[$i];
-      		$affiliate_payment = xtc_round(($affiliate_total * $affiliate_percent / 100), 2);
+      		$affiliate_payment = round(($affiliate_total * $affiliate_percent / 100), 2);
       		if ($affiliate_payment > 0) {
       			$sql_data_array = array('affiliate_id' => $affiliate_tiers_array['affiliate_id'],
                 		                'affiliate_date' => $affiliate_clientdate,

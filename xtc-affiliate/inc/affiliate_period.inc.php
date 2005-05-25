@@ -1,6 +1,6 @@
 <?php
 /*------------------------------------------------------------------------------
-   $Id: affiliate_period.inc.php,v 1.1 2003/12/21 20:13:07 hubi74 Exp $
+   $Id: affiliate_period.inc.php,v 1.2 2005/05/25 18:20:23 hubi74 Exp $
 
    XTC-Affiliate - Contribution for XT-Commerce http://www.xt-commerce.com
    modified by http://www.netz-designer.de
@@ -20,6 +20,9 @@
 
    Released under the GNU General Public License
    ---------------------------------------------------------------------------*/
+   
+   require_once(DIR_FS_INC . 'xtc_draw_pull_down_menu.inc.php');
+   
 
 /**
  * affiliate_period()
